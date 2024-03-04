@@ -2,12 +2,10 @@
 #include <stdlib.h>
 
 #include <sys/types.h>
-#include <WinSock.h>
-#include <winsock2.h>
+#include <sys/socket.h>
 
-#include <Ws2tcpip.h>
-
-
+#include <netinet/in.h>
+#include <unistd.h>
 
 int main(void)
 {
@@ -25,8 +23,8 @@ int main(void)
         server_address.sin_port = htons(9002);
         server_address.sin_addr.s_addr = INADDR_ANY;
 
-        //bind the socket to our specifeid IP and port
-        bind(server_socket, (struct sockaddr*) &server_address, sizeof(server_address);
+        // bind the socket to our specifeid IP and port
+        bind(server_socket, (struct sockaddr *)&server_address, sizeof(server_address));
 
         listen(server_socket, 5);
 
@@ -35,8 +33,5 @@ int main(void)
 
         send(client_socket, server_message, sizeof(server_message), 0);
 
-
         return 0;
-
 }
-
