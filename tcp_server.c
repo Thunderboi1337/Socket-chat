@@ -1,37 +1,45 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "socket.h"
 
-#include <sys/types.h>
-#include <sys/socket.h>
-
-#include <netinet/in.h>
-#include <unistd.h>
+#define MAX_BUFFER_SIZE 256
 
 int main(void)
 {
 
-        char server_message[256] = "You have reached the server";
-
-        // creates the socket
-        int server_socket;
-        server_socket = socket(AF_INET, SOCK_STREAM, 0);
-
-        // define the server address
-
-        struct sockaddr_in server_address;
-        server_address.sin_family = AF_INET;
-        server_address.sin_port = htons(9002);
-        server_address.sin_addr.s_addr = INADDR_ANY;
+        // creates the socket and adrees
+        int server_socket_fd = create_tcp_ipv4_socket();
+        struct sockaddr_in *server_adress = create_tcp_ipv4_adress("", 9002);
 
         // bind the socket to our specifeid IP and port
-        bind(server_socket, (struct sockaddr *)&server_address, sizeof(server_address));
+        int binded = bind(server_socket_fd, (struct sockaddr *)server_adress, sizeof(*server_adress));
 
-        listen(server_socket, 5);
+        if (binded == 0)
+        {
+                printf("binding");
+        }
 
-        int client_socket;
-        client_socket = accept(server_socket, NULL, NULL);
+        int listend = listen(server_socket_fd, 10);
 
-        send(client_socket, server_message, sizeof(server_message), 0);
+        if (listend == 0)
+        {
+                printf("Listen works");
+        }
+
+        struct sockaddr_in clientAdress;
+        int clientAdressSize = sizeof(struct sockaddr_in);
+        int client_socket_fd = accept(server_socket_fd, (struct sockaddr *)&clientAdress, &clientAdressSize);
+
+        if (client_socket_fd == 0)
+        {
+                printf("client socket accepted");
+        }
+
+        char msg_buffer[1024];
+        recv(client_socket_fd, msg_buffer, 1024, 0);
+
+        printf("Client response %s", msg_buffer);
+
+        // Close the socket
+        close(server_socket_fd);
 
         return 0;
 }
