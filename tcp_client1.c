@@ -7,13 +7,13 @@ int main()
 {
     // Create a socket
     int socket_fd = create_tcp_ipv4_socket();
-    struct sockaddr_in *adress = create_tcp_ipv4_adress("127.0.0.1", 9002);
+    struct sockaddr_in *address = create_tcp_ipv4_adress("127.0.0.1", 9002);
 
-    int connection_status = connect(socket_fd, (struct sockaddr *)&adress, sizeof(adress));
+    int connection_status = connect(socket_fd, (struct sockaddr *)address, sizeof(struct sockaddr_in));
 
     if (connection_status == -1)
     {
-        printf("Error connecting to the server\n");
+        perror("Error connecting to the server");
     }
 
     // Send a message to the server
