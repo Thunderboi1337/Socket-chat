@@ -20,6 +20,8 @@ void start_accept_incoming_Connections(int server_socket_fd);
 
 void accept_new_connetions_receive_n_display(int server_socket_fd);
 
+receive_and_display_on_separate_thread(struct Accepted_sockets *server_socket_fd);
+
 int main(void)
 {
 
@@ -52,10 +54,6 @@ int main(void)
 
         struct Accepted_sockets *client_socket_fd = accept_incoming_connections(server_socket_fd);
 
-        receive_and_display(client_socket_fd->accepted_sockets_fd);
-
-        // Close the socket
-        close(client_socket_fd->accepted_sockets_fd);
         shutdown(server_socket_fd, SHUT_RDWR);
 
         return 0;
@@ -80,14 +78,15 @@ struct Accepted_sockets *accept_incoming_connections(int server_socket_fd)
         return Accepted_sockets;
 }
 
-void receive_and_display(int socketfd)
+void receive_and_display(int socket_fd)
 {
         char msg_buffer[1024];
 
         while (true)
         {
 
-                ssize_t amountReceived = recv(socketfd, msg_buffer, 1024, 0);
+                ssize_t amountReceived = recv(socket_fd, msg_buffer, 1024, 0);
+
                 if (amountReceived > 0)
                 {
                         msg_buffer[amountReceived] = 0;
@@ -98,6 +97,8 @@ void receive_and_display(int socketfd)
                         break;
                 }
         }
+
+        close(socket_fd);
 }
 
 void start_accept_incoming_Connections(int server_socket_fd)
@@ -111,8 +112,15 @@ void accept_new_connetions_receive_n_display(int server_socket_fd)
         while (true)
         {
                 struct Accepted_sockets *client_socket_fd = accept_incoming_connections(server_socket_fd);
-                receive_and_display(client_socket_fd->accepted_sockets_fd);
 
-                close(client_socket_fd->accepted_sockets_fd);
+                receive_and_display_on_separate_thread(client_socket_fd);
         }
+}
+
+receive_and_display_on_separate_thread(struct Accepted_sockets *socket_fd)
+{
+        pthread_t id;
+        pthread_create(&id, NULL, receive_and_display, socket_fd->accepted_sockets_fd);
+
+        close(socket_fd->accepted_sockets_fd);
 }
