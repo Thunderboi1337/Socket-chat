@@ -74,6 +74,7 @@ void start_accept_incoming_Connections(int server_socket_fd)
         while (true)
         {
                 struct Accepted_socket *client_socket = accept_incoming_connections(server_socket_fd);
+                accepted_socketss[accpted_sockets_count++] = *client_socket;
 
                 receive_and_display_on_separate_thread(client_socket);
         }

@@ -3,7 +3,7 @@
 #include <pthread.h>
 #include "socket.h"
 
-void readConsoleEntriesAndSendToServer(int socketFD)
+void send_entries(int socketFD)
 {
     char *name = NULL;
     size_t nameSize = 0;
@@ -85,7 +85,7 @@ int main()
 
     create_threads(&socketFD);
 
-    readConsoleEntriesAndSendToServer(socketFD);
+    send_entries(socketFD);
 
     // Close the socket
     close(socketFD);
