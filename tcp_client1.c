@@ -50,7 +50,7 @@ void *listen_to_msg(void *arg)
         if (amount_received > 0)
         {
             msg_buffer[amount_received] = 0;
-            printf("Client response: %s\n", msg_buffer);
+            printf("%s\n", msg_buffer);
         }
         if (amount_received == 0)
         {
