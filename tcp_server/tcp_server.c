@@ -28,11 +28,10 @@ void start_accept_incoming_Connections(int server_socket_fd);
 
 int main(void)
 {
-        // creates the socket and address
+
         int server_socket_fd = create_tcp_ipv4_socket();
         struct sockaddr_in *server_address = create_tcp_ipv4_adress("", 2000);
 
-        // bind the socket to our specified IP and port
         int binded = bind(server_socket_fd, (struct sockaddr *)server_address, sizeof(*server_address));
 
         if (binded != 0)
@@ -110,20 +109,20 @@ void *receive_and_display(void *socket_fd_)
 
                 if (amount_received > 0)
                 {
-                        msg_buffer[amount_received] = '\0'; // Null-terminate the received data
+                        msg_buffer[amount_received] = '\0';
                         printf("Client response: %s\n", msg_buffer);
 
                         send_received_msg(msg_buffer, socket_fd);
                 }
                 else if (amount_received == 0)
                 {
-                        // Connection closed by the client
+
                         printf("Client closed the connection\n");
                         break;
                 }
         }
 
-        free(socket_fd_ptr); // Remember to free the dynamically allocated memory for the socket FD
+        free(socket_fd_ptr);
         return NULL;
 }
 
