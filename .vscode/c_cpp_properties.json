@@ -4,7 +4,9 @@
             "name": "Linux",
             "includePath": [
                 "${default}",
-                "/home/marcus/Desktop/SOCKET/Socket-chat/lib/socket"
+                "/home/marcus/Desktop/SOCKET/Socket-chat/lib/socket",
+                "/home/marcus/Desktop/SOCKET/Socket-chat/hash_storage",
+                "${workspaceFolder}/hash_storage"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

@@ -91,6 +91,8 @@ struct Accepted_socket *accept_incoming_connections(int server_socket_fd)
         else
         {
                 printf("Client accepted!\n");
+
+                // FUNCTION FOR USERNAME AFTER ACEPTION
         }
 
         return accepted_sockets;

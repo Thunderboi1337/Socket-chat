@@ -11,9 +11,10 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -pedantic-errors")
 # Create a library called "socketlib" which includes the source file "socket.c".
 # The extension is already found. Any number of sources could be listed here.
 add_library(socketlib lib/socket/socket.c)
-
+add_library(hashlib lib/hash_storage/hash_storage.c)
 # Include directories for "socketlib".
 target_include_directories(socketlib PUBLIC "${PROJECT_SOURCE_DIR}/lib/socket")
+target_include_directories(hashlib PUBLIC "${PROJECT_SOURCE_DIR}/lib/hash_storage")
 
 # Make an executable for the TCP server "tcp_server".
 # The source file "tcp_server.c" should include the necessary headers.
@@ -28,3 +29,9 @@ add_executable(client tcp_client/tcp_client.c)
 
 # Link the "socketlib" library with the "tcp_client" executable.
 target_link_libraries(client PUBLIC socketlib)
+
+# The source file "tcp_client.c" should include the necessary headers.
+add_executable(test test/test_hash_table/test.c)
+
+# Link the "socketlib" library with the "tcp_client" executable.
+target_link_libraries(test PUBLIC hashlib)
