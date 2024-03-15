@@ -1,6 +1,7 @@
 #include "hash_storage.h"
 
 Users *hash_table[TABLE_SIZE];
+#define DELETED_NODE (Users *)(0xFFFFFFFFFFFFFFFFUL)
 
 unsigned int hash(char *name)
 {
@@ -75,28 +76,44 @@ bool hash_table_add_user(Users *User)
 Users *hash_table_lookup(char *name)
 {
     int index = hash(name);
-    if (hash_table[index] != NULL && strncmp(hash_table[index]->username, name, TABLE_SIZE) == 0)
+    for (int i = 0; i < TABLE_SIZE; i++)
     {
-        return hash_table[index];
+        int try = (i + index) % TABLE_SIZE;
+        if (hash_table[try] == NULL)
+        {
+            printf("User not found\n");
+            return false;
+        }
+        if (hash_table[try] != NULL && strncmp(hash_table[try]->username, name, TABLE_SIZE) == 0)
+        {
+            printf("User found\n");
+            return hash_table[try];
+        }
+        if (hash_table[try] == DELETED_NODE)
+            continue;
     }
-    else
-    {
-        return NULL;
-    }
+
+    return NULL;
 }
 
 Users *hash_table_delete(char *name)
 {
     int index = hash(name);
-    if (hash_table[index] != NULL && strncmp(hash_table[index]->username, name, TABLE_SIZE) == 0)
+    for (int i = 0; i < TABLE_SIZE; i++)
     {
-        Users *tmp = hash_table[index];
-        hash_table[index] = NULL;
-        return tmp;
-    }
-    else
-    {
+        int try = (i + index) % TABLE_SIZE;
+        if (hash_table[try] == NULL)
+            return NULL;
+        if (hash_table[try] == DELETED_NODE)
+            continue;
+        if (strncmp(hash_table[try]->username, name, TABLE_SIZE) == 0)
+        {
 
-        return NULL;
+            Users *tmp = hash_table[try];
+            hash_table[try] = NULL;
+
+            return hash_table[try];
+        }
     }
+    return NULL;
 }
