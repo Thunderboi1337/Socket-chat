@@ -17,4 +17,12 @@ typedef struct
 
 unsigned int hash(char *name);
 
+bool hash_table_init();
+
+void hash_table_print();
+
+bool hash_table_add_user(Users *User);
+
+Users *hash_table_lookup(char *name);
+
 #endif

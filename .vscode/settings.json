@@ -6,6 +6,7 @@
         "socket.h": "c",
         "stdio.h": "c",
         "inet.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "hash_storage.h": "c"
     }
 }
