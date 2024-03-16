@@ -25,33 +25,33 @@ void test_hash_delete_function(void)
 
     TEST_ASSERT_TRUE(hash_table_init());
 
-    hash_table_add_user(&Dude);
-    hash_table_add_user(&Doris);
-    hash_table_add_user(&Bob);
-    hash_table_add_user(&Ida);
-    hash_table_add_user(&Marcus);
-    hash_table_add_user(&Soufien);
-    hash_table_add_user(&Daniel);
-    hash_table_add_user(&Martins);
-    hash_table_add_user(&Homajon);
-    hash_table_add_user(&Dick);
-    hash_table_add_user(&James);
-    hash_table_add_user(&Oliver);
+    TEST_ASSERT_TRUE(hash_table_add_user(&Dude));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Doris));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Bob));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Ida));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Marcus));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Soufien));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Daniel));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Martins));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Homajon));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Dick));
+    TEST_ASSERT_TRUE(hash_table_add_user(&James));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Oliver));
 
     hash_table_print();
 
-    hash_table_delete("Dude");
-    hash_table_delete("Doris");
-    hash_table_delete("Bob");
-    hash_table_delete("Ida");
-    hash_table_delete("Marcus");
-    hash_table_delete("Soufien");
-    hash_table_delete("Daniel");
-    hash_table_delete("Martins");
-    hash_table_delete("Homajon");
-    hash_table_delete("Dick");
-    hash_table_delete("James");
-    hash_table_delete("Oliver");
+    TEST_ASSERT_EQUAL_STRING("Dude", hash_table_delete("Dude"));
+    TEST_ASSERT_EQUAL_STRING("Doris", hash_table_delete("Doris"));
+    TEST_ASSERT_EQUAL_STRING("Bob", hash_table_delete("Bob"));
+    TEST_ASSERT_EQUAL_STRING("Ida", hash_table_delete("Ida"));
+    TEST_ASSERT_EQUAL_STRING("Marcus", hash_table_delete("Marcus"));
+    TEST_ASSERT_EQUAL_STRING("Soufien", hash_table_delete("Soufien"));
+    TEST_ASSERT_EQUAL_STRING("Daniel", hash_table_delete("Daniel"));
+    TEST_ASSERT_EQUAL_STRING("Martins", hash_table_delete("Martins"));
+    TEST_ASSERT_EQUAL_STRING("Homajon", hash_table_delete("Homajon"));
+    TEST_ASSERT_EQUAL_STRING("Dick", hash_table_delete("Dick"));
+    TEST_ASSERT_EQUAL_STRING("James", hash_table_delete("James"));
+    TEST_ASSERT_EQUAL_STRING("Oliver", hash_table_delete("Oliver"));
 
     TEST_ASSERT_FALSE(hash_table_lookup("Dude"));
     TEST_ASSERT_FALSE(hash_table_lookup("Doris"));
@@ -82,8 +82,8 @@ void test_same_name_error(void)
 
     hash_table_print();
 
-    TEST_ASSERT_EQUAL_STRING("Oliver", hash_table_delete("Oliver")->username);
-    TEST_ASSERT_EQUAL_PTR(NULL, hash_table_delete("Oliver")->username);
+    TEST_ASSERT_EQUAL_STRING("Oliver", hash_table_delete("Oliver"));
+    TEST_ASSERT_EQUAL_PTR(NULL, hash_table_delete("Oliver"));
 
     hash_table_print();
 

@@ -35,16 +35,16 @@ void hash_table_print()
     {
         if (hash_table[i] == NULL)
         {
-            printf("\t%i\t---\n", i);
+            printf("\t%i\t---\n", i + 1);
         }
         else if (hash_table[i] == DELETED_NODE)
         {
 
-            printf("\t%i\t---d\n", i);
+            printf("\t%i\t---d\n", i + 1);
         }
         else
         {
-            printf("\t%i\t%s\n", i, hash_table[i]->username);
+            printf("\t%i\t%s\n", i + 1, hash_table[i]->username);
         }
     }
 
