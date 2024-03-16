@@ -145,6 +145,54 @@ void test_max_amount(void)
     hash_table_print();
 }
 
+void test_delete_nonexistent_user(void)
+{
+    TEST_ASSERT_TRUE(hash_table_init());
+
+    Users Alice = {.username = "Alice"};
+    Users Bob = {.username = "Bob"};
+
+    // Add users to the hash table
+    TEST_ASSERT_TRUE(hash_table_add_user(&Alice));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Bob));
+
+    // Attempt to delete a user that doesn't exist
+    TEST_ASSERT_NULL(hash_table_delete("Carol"));
+
+    // Ensure the existing users are still in the hash table
+    TEST_ASSERT_TRUE(hash_table_lookup("Alice"));
+    TEST_ASSERT_TRUE(hash_table_lookup("Bob"));
+}
+
+void test_add_and_delete_multiple_users(void)
+{
+    TEST_ASSERT_TRUE(hash_table_init());
+
+    // Define users
+    Users Alice = {.username = "Alice"};
+    Users Bob = {.username = "Bob"};
+    Users Carol = {.username = "Carol"};
+    Users Dave = {.username = "Dave"};
+
+    // Add users to the hash table
+    TEST_ASSERT_TRUE(hash_table_add_user(&Alice));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Bob));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Carol));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Dave));
+
+    // Delete users
+    TEST_ASSERT_EQUAL_STRING("Alice", hash_table_delete("Alice")->username);
+    TEST_ASSERT_EQUAL_STRING("Bob", hash_table_delete("Bob")->username);
+
+    // Ensure the deleted users are not in the hash table
+    TEST_ASSERT_FALSE(hash_table_lookup("Alice"));
+    TEST_ASSERT_FALSE(hash_table_lookup("Bob"));
+
+    // Ensure the remaining users are still in the hash table
+    TEST_ASSERT_TRUE(hash_table_lookup("Carol"));
+    TEST_ASSERT_TRUE(hash_table_lookup("Dave"));
+}
+
 int main(void)
 {
 
@@ -155,6 +203,10 @@ int main(void)
     RUN_TEST(test_same_name_error);
 
     RUN_TEST(test_max_amount);
+
+    RUN_TEST(test_delete_nonexistent_user);
+
+    RUN_TEST(test_add_and_delete_multiple_users);
 
     return UNITY_END();
 }
