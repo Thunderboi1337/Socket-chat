@@ -1,7 +1,6 @@
 #include "hash_storage.h"
 
 Users *hash_table[TABLE_SIZE];
-#define DELETED_NODE (Users *)(0xFFFFFFFFFFFFFFFFUL)
 
 unsigned int hash(char *name)
 {
@@ -133,7 +132,7 @@ Users *hash_table_delete(char *name)
             Users *tmp = hash_table[try];
             hash_table[try] = DELETED_NODE;
 
-            return hash_table[try];
+            return tmp;
         }
     }
     return NULL;

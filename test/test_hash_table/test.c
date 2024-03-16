@@ -23,7 +23,7 @@ void test_hash_delete_function(void)
     Users James = {.username = "James"};
     Users Oliver = {.username = "Oliver"};
 
-    hash_table_init();
+    TEST_ASSERT_TRUE(hash_table_init());
 
     hash_table_add_user(&Dude);
     hash_table_add_user(&Doris);
@@ -74,7 +74,7 @@ void test_same_name_error(void)
 
     Users Oliver = {.username = "Oliver"};
 
-    hash_table_init();
+    TEST_ASSERT_TRUE(hash_table_init());
 
     hash_table_add_user(&Oliver);
     hash_table_add_user(&Oliver);
@@ -82,9 +82,67 @@ void test_same_name_error(void)
 
     hash_table_print();
 
-    hash_table_delete("Oliver");
+    TEST_ASSERT_EQUAL_STRING("Oliver", hash_table_delete("Oliver")->username);
+    TEST_ASSERT_EQUAL_PTR(NULL, hash_table_delete("Oliver")->username);
+
+    hash_table_print();
 
     TEST_ASSERT_FALSE(hash_table_lookup("Oliver"));
+}
+
+void test_max_amount(void)
+{
+
+    TEST_ASSERT_TRUE(hash_table_init());
+
+    Users Dude = {.username = "Dude"};
+    Users Doris = {.username = "Doris"};
+    Users Bob = {.username = "Bob"};
+    Users Ida = {.username = "Ida"};
+    Users Marcus = {.username = "Marcus"};
+    Users Soufien = {.username = "Soufien"};
+    Users Daniel = {.username = "Daniel"};
+    Users Martins = {.username = "Martins"};
+    Users Homajon = {.username = "Homajon"};
+    Users Dick = {.username = "Dick"};
+    Users James = {.username = "James"};
+    Users Oliver = {.username = "Oliver"};
+    Users Adam = {.username = "Adam"};
+    Users Jonas = {.username = "Jonas"};
+    Users Kim = {.username = "Kim"};
+    Users Erik = {.username = "Erik"};
+    Users Emil = {.username = "Emil"};
+    Users Johan = {.username = "Johan"};
+    Users Gustaf = {.username = "Gustaf"};
+    Users Jens = {.username = "Jens"};
+    Users Overkill = {.username = "Overkill"};
+
+    hash_table_print();
+
+    TEST_ASSERT_TRUE(hash_table_add_user(&Dude));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Doris));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Bob));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Ida));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Marcus));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Soufien));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Daniel));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Martins));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Homajon));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Dick));
+    TEST_ASSERT_TRUE(hash_table_add_user(&James));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Oliver));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Adam));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Jonas));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Kim));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Erik));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Emil));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Johan));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Gustaf));
+    TEST_ASSERT_TRUE(hash_table_add_user(&Jens));
+
+    TEST_ASSERT_FALSE(hash_table_add_user(&Overkill));
+
+    hash_table_print();
 }
 
 int main(void)
@@ -95,6 +153,8 @@ int main(void)
     RUN_TEST(test_hash_delete_function);
 
     RUN_TEST(test_same_name_error);
+
+    RUN_TEST(test_max_amount);
 
     return UNITY_END();
 }
