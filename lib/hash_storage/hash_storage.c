@@ -107,7 +107,7 @@ bool hash_table_add_user(Users *User)
 }
 Users *hash_table_lookup(char *name)
 {
-    Users *result = NULL; // Variable to hold the result to be returned
+    Users *result = NULL;
 
     if (hash_table_init_state)
     {
@@ -118,10 +118,10 @@ Users *hash_table_lookup(char *name)
             if (hash_table[try] == NULL)
             {
                 printf("User not found\n");
-                break; // Exit the loop as user not found
+                break;
             }
             else if (hash_table[try] == DELETED_NODE)
-                continue; // Skip deleted node
+                continue;
             else if (hash_table[try] != NULL && strncmp(hash_table[try]->username, name, TABLE_SIZE) == 0)
             {
                 printf("User found %s\n", name);
