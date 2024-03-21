@@ -12,7 +12,9 @@
 
 typedef struct
 {
-    char username[MAX_NAME];
+
+    int socket_fd;
+    char *username;
 
 } Users;
 

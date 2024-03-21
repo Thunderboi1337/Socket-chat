@@ -23,7 +23,7 @@ target_include_directories(unity PUBLIC "${PROJECT_SOURCE_DIR}/test/unity")
 add_executable(server tcp_server/tcp_server.c)
 
 # Link the "socketlib" library with the "tcp_server" executable.
-target_link_libraries(server PUBLIC socketlib)
+target_link_libraries(server PUBLIC socketlib hashlib)
 
 # Make an executable for the TCP client "tcp_client".
 # The source file "tcp_client.c" should include the necessary headers.

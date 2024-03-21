@@ -1,8 +1,6 @@
 #include "unity.h"
 #include "hash_storage.h"
 
-Users test_user;
-
 void setUp(void) {}
 
 void tearDown(void) {}

@@ -5,36 +5,36 @@
 
 void send_entries(int socketFD)
 {
-    char *name = NULL;
-    size_t nameSize = 0;
-    printf("please enter your name?\n");
-    ssize_t nameCount = getline(&name, &nameSize, stdin);
-    name[nameCount - 1] = 0;
-
     char *line = NULL;
     size_t lineSize = 0;
     printf("type and we will send(type exit)...\n");
 
-    char buffer[1024];
-
     while (true)
     {
-
+        printf("> ");
         ssize_t charCount = getline(&line, &lineSize, stdin);
-        line[charCount - 1] = 0;
-
-        sprintf(buffer, "%s:%s", name, line);
-
         if (charCount > 0)
         {
+            line[charCount - 1] = '\0';
+
             if (strcmp(line, "exit") == 0)
                 break;
 
-            ssize_t amountWasSent = send(socketFD,
-                                         buffer,
-                                         strlen(buffer), 0);
+            ssize_t amountWasSent = send(socketFD, line, strlen(line), 0);
+            if (amountWasSent == -1)
+            {
+                perror("send");
+                break;
+            }
+        }
+        else if (charCount == -1)
+        {
+            perror("getline failed");
+            break;
         }
     }
+
+    free(line);
 }
 
 void *listen_to_msg(void *arg)
