@@ -30,4 +30,6 @@ Users *hash_table_lookup(char *name);
 
 Users *hash_table_delete(char *name);
 
+int hash_table_get_socket(char *name);
+
 #endif

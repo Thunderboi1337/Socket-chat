@@ -169,3 +169,36 @@ Users *hash_table_delete(char *name)
 
     return result;
 }
+
+int hash_table_get_socket(char *name)
+{
+    int socket = -1; // if user is not found
+
+    if (hash_table_init_state)
+    {
+        int index = hash(name);
+        for (int i = 0; i < TABLE_SIZE; i++)
+        {
+            int try = (i + index) % TABLE_SIZE;
+            if (hash_table[try] == NULL)
+            {
+                printf("User not found\n");
+                break;
+            }
+            else if (hash_table[try] == DELETED_NODE)
+                continue;
+            else if (hash_table[try] != NULL && strncmp(hash_table[try]->username, name, TABLE_SIZE) == 0)
+            {
+                printf("User found %s\n", name);
+                socket = hash_table[try]->socket_fd;
+                break;
+            }
+        }
+    }
+    else
+    {
+        printf("Hash_table not initialized\n");
+    }
+
+    return socket;
+}

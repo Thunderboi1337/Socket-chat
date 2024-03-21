@@ -143,6 +143,7 @@ void *username_request(void *socket_fd_)
         hash_table_lookup(user->username);
 
         // Register username and socket_fd in the hash table
+        //
 
         free(user->username);
         free(user);
@@ -165,6 +166,10 @@ void *receive_and_display(void *socket_fd_)
         int socket_fd = *socket_fd_ptr;
 
         char msg_buffer[1024];
+
+        // get name of person to whom to write first..
+
+        // int socket_fd = hash_table_get_socket();
 
         while (true)
         {

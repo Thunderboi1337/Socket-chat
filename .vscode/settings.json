@@ -7,6 +7,7 @@
         "stdio.h": "c",
         "inet.h": "c",
         "string.h": "c",
-        "hash_storage.h": "c"
+        "hash_storage.h": "c",
+        "functional": "c"
     }
 }
