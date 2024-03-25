@@ -1,7 +1,5 @@
-#include <stdbool.h>
-#include <unistd.h>
-#include <pthread.h>
-#include "socket.h"
+
+#include "tcp_client.h"
 
 void send_entries(int socketFD)
 {
@@ -70,25 +68,9 @@ void create_threads(int *socket_fd)
     pthread_create(&id, NULL, listen_to_msg, socket_fd);
 }
 
-int main()
+void tcp_client_user_request(int socket_fd)
 {
-    // Create a socket
-    int socketFD = create_tcp_ipv4_socket();
-    struct sockaddr_in *address = create_tcp_ipv4_adress("127.0.0.1", 2000);
+    char buffer[256] = "user_list_request";
 
-    int result = connect(socketFD, (struct sockaddr *)address, sizeof(*address));
-
-    if (result == 0)
-    {
-        printf("Connected");
-    }
-
-    create_threads(&socketFD);
-
-    send_entries(socketFD);
-
-    // Close the socket
-    close(socketFD);
-
-    return 0;
+    ssize_t amountWasSent = send(socket_fd, buffer, strlen(buffer), 0);
 }

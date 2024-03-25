@@ -12,6 +12,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -pedantic-errors")
 add_library(socketlib lib/socket/socket.c)
 add_library(hashlib lib/hash_storage/hash_storage.c)
 add_library(tcp_serverlib lib/tcp_server/tcp_server.c)
+add_library(tcp_clientlib lib/tcp_client/tcp_client.c)
 add_library(unity test/unity/unity.c)
 
 # Include directories for "socketlib" and "hashlib".
@@ -19,7 +20,7 @@ target_include_directories(socketlib PUBLIC "${PROJECT_SOURCE_DIR}/lib/socket")
 target_include_directories(hashlib PUBLIC "${PROJECT_SOURCE_DIR}/lib/hash_storage")
 
 target_include_directories(tcp_serverlib PUBLIC "${PROJECT_SOURCE_DIR}/lib/tcp_server")
-
+target_include_directories(tcp_clientlib PUBLIC "${PROJECT_SOURCE_DIR}/lib/tcp_client")
 
 target_include_directories(unity PUBLIC "${PROJECT_SOURCE_DIR}/test/unity")
 
@@ -33,10 +34,11 @@ target_link_libraries(server PUBLIC tcp_serverlib socketlib hashlib)
 
 # Make an executable for the TCP client "tcp_client".
 # The source file "tcp_client.c" should include the necessary headers.
-add_executable(client tcp_client/tcp_client.c)
+add_executable(client src/client.c)
 
 # Link the "socketlib" library with the "tcp_client" executable.
-target_link_libraries(client PUBLIC socketlib)
+target_link_libraries(tcp_clientlib PUBLIC socketlib)
+target_link_libraries(client PUBLIC tcp_clientlib socketlib)
 
 # Make an executable for the test program.
 # The source file "test.c" should include the necessary headers.

@@ -7,7 +7,9 @@
                 "/home/marcus/Desktop/SOCKET/Socket-chat/lib/socket",
                 "/home/marcus/Desktop/SOCKET/Socket-chat/lib/hash_storage",
                 "${workspaceFolder}/hash_storage",
-                "${workspaceFolder}/tcp_server"
+                "${workspaceFolder}/tcp_server",
+                "${workspaceFolder}/lib/tcp_server",
+                "${workspaceFolder}/tcp_client"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

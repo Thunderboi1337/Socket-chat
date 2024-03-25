@@ -8,6 +8,8 @@
         "inet.h": "c",
         "string.h": "c",
         "hash_storage.h": "c",
-        "functional": "c"
+        "functional": "c",
+        "tcp_server.h": "c",
+        "stdbool.h": "c"
     }
 }
