@@ -1,69 +1,10 @@
-#include <stdbool.h>
-#include <unistd.h>
-#include <pthread.h>
-#include "socket.h"
-#include "hash_storage.h"
+
+#include "tcp_server.h"
 
 #define MAX_BUFFER_SIZE 256
 
-struct Accepted_socket
-{
-        int accepted_sockets_fd;
-        struct sockaddr_in address;
-        int error;
-        bool accpted_successfully;
-};
-
 struct Accepted_socket accepted_socketss[10];
 int accpted_sockets_count = 0;
-
-struct Accepted_socket *accept_incoming_connections(int server_socket_fd);
-
-void start_accept_incoming_Connections(int server_socket_fd);
-
-void send_userrequest_on_separate_thread(struct Accepted_socket *pSocket);
-
-void *username_request(void *socket_fd_);
-
-void receive_and_display_on_separate_thread(struct Accepted_socket *pSocket);
-
-void send_received_msg(char *buffer, int socket_fd);
-
-void *receive_and_display(void *socket_fd_);
-
-bool setup_hash_table();
-
-int main(void)
-{
-
-        int server_socket_fd = create_tcp_ipv4_socket();
-        struct sockaddr_in *server_address = create_tcp_ipv4_adress("", 2000);
-
-        int binded = bind(server_socket_fd, (struct sockaddr *)server_address, sizeof(*server_address));
-
-        if (binded != 0)
-        {
-                perror("Bind failed");
-        }
-
-        int listend = listen(server_socket_fd, 10);
-
-        if (listend != 0)
-        {
-                perror("Listen failed");
-        }
-
-        if (false == setup_hash_table())
-        {
-                perror("Hashtable failed");
-        }
-
-        start_accept_incoming_Connections(server_socket_fd);
-
-        shutdown(server_socket_fd, SHUT_RDWR);
-
-        return 0;
-}
 
 struct Accepted_socket *accept_incoming_connections(int server_socket_fd)
 {

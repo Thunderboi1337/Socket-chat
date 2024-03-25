@@ -11,19 +11,25 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -pedantic-errors")
 # The extension is already found. Any number of sources could be listed here.
 add_library(socketlib lib/socket/socket.c)
 add_library(hashlib lib/hash_storage/hash_storage.c)
+add_library(tcp_serverlib lib/tcp_server/tcp_server.c)
 add_library(unity test/unity/unity.c)
 
 # Include directories for "socketlib" and "hashlib".
 target_include_directories(socketlib PUBLIC "${PROJECT_SOURCE_DIR}/lib/socket")
 target_include_directories(hashlib PUBLIC "${PROJECT_SOURCE_DIR}/lib/hash_storage")
+
+target_include_directories(tcp_serverlib PUBLIC "${PROJECT_SOURCE_DIR}/lib/tcp_server")
+
+
 target_include_directories(unity PUBLIC "${PROJECT_SOURCE_DIR}/test/unity")
 
 # Make an executable for the TCP server "tcp_server".
 # The source file "tcp_server.c" should include the necessary headers.
-add_executable(server tcp_server/tcp_server.c)
+add_executable(server src/server.c)
 
 # Link the "socketlib" library with the "tcp_server" executable.
-target_link_libraries(server PUBLIC socketlib hashlib)
+target_link_libraries(tcp_serverlib PUBLIC socketlib hashlib)
+target_link_libraries(server PUBLIC tcp_serverlib socketlib hashlib)
 
 # Make an executable for the TCP client "tcp_client".
 # The source file "tcp_client.c" should include the necessary headers.
