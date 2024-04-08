@@ -1,16 +1,11 @@
 # Socket-chat
 
-🚀 Project Adventure: Diving Back into C & Discovering the Magic of Socket Programming 🚀
+🚀 Project Adventure: Diving Back into C & Exploring the World of Socket Programming 🚀
 
-Hey there! 👋 I'm currently embarking on an exhilarating side quest alongside my main journey as an intern and a student. This isn't just any quest; it's a deep dive back into the world of C programming—a language I haven't flirted with in a while, thanks to my recent escapades in C++ and Arduino wizardry. 🧙‍♂️✨
+Hello! This is one of my current side quests, embarked upon to brush up on my C programming skills after a prolonged hiatus, due to school and my internship, which have been focused more on C++ and Arduino C. Additionally, I've always found socket programming intriguing, yet it was a topic only briefly covered in school, leaving me with little hands-on experience. Hence, I decided that developing a socket-chat application would be an excellent way to refresh my C knowledge and delve into something relatively new.
 
-Why This Adventure? 🤔
-Skill Refreshment: Like a hero sharpening their sword, I'm dusting off my C skills to ensure they're battle-ready for any challenge. This quest is my training ground. 🗡️💪
-A Splash of Socket Programming: There's a realm of magic I've only glanced at from afar—socket programming. It's time I learn to wield its power firsthand. 🌐⚡
-The Goal? 🎯
-To merge the arcane knowledge of C with the mystical arts of socket programming. This isn't just about reminiscing the old days or learning something new; it's about creating a blend so potent that it'll elevate my coding skills to the realm of legends. 🌟
+The project began by following some tutorials on YouTube. However, as I progressed, it started evolving beyond its tutorial origins. I've incorporated hash maps to store user structures, aiming for the application to function like a conventional chat system. You can choose whom you want to message directly and, eventually, I plan to introduce a group chat feature. Currently, the program sends a message to all connected sockets indiscriminately.
 
-Join Me! 🌈
-Whether you're a fellow code wizard or a curious bystander, your company on this journey is most welcome. Let's explore the uncharted territories of C and sockets, uncovering treasures of knowledge and crafting code that echoes through the annals of programming history! 📜🔍
+I'm excited to see how this project develops and to share the journey of rediscovering C and unraveling the mysteries of socket programming.
 
-Let the adventure begin! 🚀
+Note: I'm currently working on this project and it is not finished. So if my description doesn't match what you see in the repo. Then I still haven't updated this README.
