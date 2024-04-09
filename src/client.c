@@ -1,4 +1,5 @@
 #include "tcp_client.h"
+#include "menu.h"
 
 int main()
 {
@@ -15,10 +16,13 @@ int main()
 
     create_threads(&socketFD);
 
-    send_entries(socketFD);
+    send_name(socketFD);
+
+    menu_run(socketFD);
 
     // Close the socket
     close(socketFD);
+    shutdown(socketFD, SHUT_RDWR);
 
     return 0;
 }

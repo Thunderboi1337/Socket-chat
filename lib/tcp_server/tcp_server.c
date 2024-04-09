@@ -121,7 +121,7 @@ void *receive_and_display(void *socket_fd_)
                 if (amount_received > 0)
                 {
                         msg_buffer[amount_received] = '\0';
-                        if (msg_buffer == "user_list_request")
+                        if (strcmp(msg_buffer, "user_list_request") == 0)
                         {
 
                                 printf("Client asked for Users");

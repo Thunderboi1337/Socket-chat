@@ -6,6 +6,8 @@
 #include <pthread.h>
 #include "socket.h"
 
+void send_name(int socketFD);
+
 void send_entries(int socketFD);
 
 void *listen_to_msg(void *arg);

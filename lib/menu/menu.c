@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include "menu.h"
+#include "tcp_client.h"
 
-void menu_run(void)
+void menu_run(int socket_fd)
 {
 
     while (1)
@@ -13,17 +14,17 @@ void menu_run(void)
         printf("(3)exit\n");
         printf("_______________________________\n");
 
-        getchar();
         char select;
+        select = getchar();
         switch (select)
         {
-        case 1:
-            // request user list
+        case '1':
+            menu_get_userlist(socket_fd);
 
-        case 2:
+        case '2':
             // select user
 
-        case 3:
+        case '3':
             // exit
             break;
 
@@ -33,7 +34,7 @@ void menu_run(void)
     }
 }
 
-void menu_get_userlist(void)
+void menu_get_userlist(int socket_fd)
 {
-    tcp_client_user_request();
+    tcp_client_user_request(socket_fd);
 }
