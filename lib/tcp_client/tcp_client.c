@@ -104,18 +104,36 @@ void create_threads(int *socket_fd)
 
 void tcp_client_user_request(int socket_fd)
 {
-    char buffer[256] = "user_list_request";
-    char list[256];
+    char buffer[18] = "user_list_request";
+    char list[1024];
 
     ssize_t amountWasSent = send(socket_fd, buffer, strlen(buffer), 0);
+    if (amountWasSent == -1)
+    {
+        perror("send failed");
+        return; // Exit the function if send failed
+    }
 
-    ssize_t amount_received = recv(socket_fd, list, 1024, 0);
+    // Receive the list of users
+    ssize_t amount_received = recv(socket_fd, list, sizeof(list) - 1, 0); // Use sizeof(list)-1 to leave space for null terminator
+    if (amount_received == -1)
+    {
+        perror("recv failed");
+        return; // Exit the function if recv failed
+    }
+
+    list[amount_received] = '\0'; // Null-terminate the received data
 
     printf("BEGIN---\n");
 
-    for (int i = 0; i < amount_received; i++)
+    // Example of processing a simple comma-separated list of usernames.
+    // This assumes the server sends usernames separated by commas.
+    char *username = strtok(list, ",");
+    int userCount = 0;
+    while (username != NULL)
     {
-        printf("\t%i\t%s\n", i + 1, list);
+        printf("\t%i\t%s\n", ++userCount, username);
+        username = strtok(NULL, ",");
     }
 
     printf("End---\n");

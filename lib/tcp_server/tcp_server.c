@@ -108,45 +108,42 @@ void *receive_and_display(void *socket_fd_)
 
         char msg_buffer[1024];
 
-        // get name of person to whom to write first..
-
-        // int socket_fd = hash_table_get_socket();
-
         while (true)
         {
-                char buff[256];
-
-                ssize_t amount_received = recv(socket_fd, msg_buffer, 1024, 0);
+                ssize_t amount_received = recv(socket_fd, msg_buffer, sizeof(msg_buffer) - 1, 0);
 
                 if (amount_received > 0)
                 {
-                        msg_buffer[amount_received] = '\0';
+                        msg_buffer[amount_received] = '\0'; // Null-terminate the received message
                         if (strcmp(msg_buffer, "user_list_request") == 0)
                         {
+                                printf("Client asked for Users\n");
 
-                                printf("Client asked for Users");
+                                char buff[256];
+                                int user_list_length = hash_table_get_users(buff); // Assume this function now returns the length of the list
+                                printf("userlist amont:%d", user_list_length);
 
-                                hash_table_get_users(buff);
-
-                                send(socket_fd, buff, sizeof(buff), 0);
+                                send(socket_fd, buff, user_list_length, 0); // Send only the actual data
                         }
                         else
                         {
-
                                 printf("Client response: %s\n", msg_buffer);
-
-                                send_received_msg(msg_buffer, socket_fd);
+                                send_received_msg(msg_buffer, socket_fd); // Broadcast the message
                         }
                 }
                 else if (amount_received == 0)
                 {
-
                         printf("Client closed the connection\n");
-                        break;
+                        break; // Exit loop on graceful close
+                }
+                else
+                {
+                        perror("recv failed");
+                        break; // Exit loop on error
                 }
         }
 
-        free(socket_fd_ptr);
+        free(socket_fd_ptr); // Free dynamically allocated memory for socket descriptor
         return NULL;
 }
 

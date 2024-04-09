@@ -203,8 +203,10 @@ int hash_table_get_socket(char *name)
     return socket;
 }
 
-void hash_table_get_users(char *buf)
+int hash_table_get_users(char *buf)
 {
+    int list_length = 0;
+
     if (buf == NULL)
     {
         printf("Buff == NULL");
@@ -224,7 +226,10 @@ void hash_table_get_users(char *buf)
             else
             {
                 strcpy(buf, hash_table[i]->username);
+                list_length++;
             }
         }
     }
+
+    return list_length;
 }
