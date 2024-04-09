@@ -12,6 +12,6 @@ void *listen_to_msg(void *arg);
 
 void create_threads(int *socket_fd);
 
-void tcp_client_user_request(void);
+void tcp_client_user_request(int socket_fd);
 
 #endif

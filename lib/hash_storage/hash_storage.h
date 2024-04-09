@@ -32,4 +32,6 @@ Users *hash_table_delete(char *name);
 
 int hash_table_get_socket(char *name);
 
+void hash_table_get_users(char *buf);
+
 #endif

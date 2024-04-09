@@ -202,3 +202,29 @@ int hash_table_get_socket(char *name)
 
     return socket;
 }
+
+void hash_table_get_users(char *buf)
+{
+    if (buf == NULL)
+    {
+        printf("Buff == NULL");
+    }
+    else
+    {
+        for (int i = 0; i < TABLE_SIZE; i++)
+        {
+            if (hash_table[i] == NULL)
+            {
+                continue;
+            }
+            else if (hash_table[i] == DELETED_NODE)
+            {
+                continue;
+            }
+            else
+            {
+                strcpy(buf, hash_table[i]->username);
+            }
+        }
+    }
+}

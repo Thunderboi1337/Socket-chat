@@ -114,14 +114,29 @@ void *receive_and_display(void *socket_fd_)
 
         while (true)
         {
+                char buff[256];
+
                 ssize_t amount_received = recv(socket_fd, msg_buffer, 1024, 0);
 
                 if (amount_received > 0)
                 {
                         msg_buffer[amount_received] = '\0';
-                        printf("Client response: %s\n", msg_buffer);
+                        if (msg_buffer == "user_list_request")
+                        {
 
-                        send_received_msg(msg_buffer, socket_fd);
+                                printf("Client asked for Users");
+
+                                hash_table_get_users(buff);
+
+                                send(socket_fd, buff, sizeof(buff), 0);
+                        }
+                        else
+                        {
+
+                                printf("Client response: %s\n", msg_buffer);
+
+                                send_received_msg(msg_buffer, socket_fd);
+                        }
                 }
                 else if (amount_received == 0)
                 {

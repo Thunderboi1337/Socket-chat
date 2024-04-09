@@ -35,4 +35,5 @@ void menu_run(void)
 
 void menu_get_userlist(void)
 {
+    tcp_client_user_request();
 }
